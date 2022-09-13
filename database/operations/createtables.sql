@@ -1,6 +1,6 @@
 create table game (
     id bigserial,
-    user_id bigint,
+    user_id bigint[],
     club_id bigint,
     start_time timestamp,
     end_time timestamp,

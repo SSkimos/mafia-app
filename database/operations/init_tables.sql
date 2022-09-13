@@ -17,10 +17,22 @@ values ('шериф');
 insert into role (title)
 values ('мирный житель');
 
-insert into game (user_id, club_id, start_time, end_time, winner)
-values ((select id from "user" where login in ('curtrika1', 'curtrika2')),
-       (select id from club where club.name = 'РТУ МИРЭА'),
-       '2022/09/13 13:40', '2022/09/13 15:10', 'мафия');
+insert into action (title)
+values ('победа мирным жителем');
+insert into action (title)
+values ('победа мафией');
+insert into action (title)
+values ('победа доном');
+insert into action (title)
+values ('победа шерифом');
+insert into action (title)
+values ('дополнительный балл');
+insert into action (title)
+values ('штраф');
+insert into action (title)
+values ('лучший ход мирного жителя или шерифа');
+insert into action (title)
+values ('удаление с игрового стола');
 
 insert into "user" (login, password, role, club_id)
 values ('curtrika', '123', '1', (select id from club where club.name = 'РТУ МИРЭА'));
@@ -75,4 +87,7 @@ values ('kellabul', '123', '1', (select id from club where club.name = 'Школ
 insert into "user" (login, password, role, club_id)
 values ('jewfishc', '123', '1', (select id from club where club.name = 'Школа 21'));
 
-
+insert into game (user_id, club_id, start_time, end_time, winner)
+values ((select array(select id from "user" where login in ('curtrika', 'teresecl'))),
+               (select id from club where club.name = 'РТУ МИРЭА'),
+               '2022/09/13 13:50', '2022/09/13 15:10', 'test');
