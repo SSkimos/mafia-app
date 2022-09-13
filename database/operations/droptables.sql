@@ -1,0 +1,1 @@
+drop table achievement, action, club, game, role, user_game_data, "user", city;
