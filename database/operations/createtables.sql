@@ -18,7 +18,7 @@ create table role (
     title varchar(100)
 );
 
---drop table if exists actions;
+drop table if exists actions;
 create table actions (
     id integer primary key,
     title varchar(100)
@@ -40,7 +40,7 @@ create table user_game_data (
     id integer primary key,
     user_id integer,
     role_id integer,
-    achievements_id int[],
+    achievements_id integer[],
     foreign key (user_id)
         references users (id)
         on update cascade
@@ -65,6 +65,10 @@ create table game (
     winner varchar(100),
     foreign key (club_id)
         references club (id)
+        on update cascade
+        on delete restrict,
+    foreign key (user_id)
+        references user_game_data (id)
         on update cascade
         on delete restrict
 );
