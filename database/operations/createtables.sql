@@ -1,50 +1,71 @@
-create table game (
-    id bigserial,
-    user_id bigint[],
-    club_id bigint,
-    start_time timestamp,
-    end_time timestamp,
-    winner varchar(100)
-);
-
+drop table if exists club;
 create table club (
-    id bigserial,
-    name varchar(100),
-    city_id bigint
+    id integer primary key,
+    title varchar(100) not null
 );
 
-create table city (
-    id bigserial,
-    city varchar(100)
-);
-
-create table action (
-    id bigserial,
-    title varchar(100)
-);
-
-create table achievement (
-    id bigserial,
-    actions_id bigint,
-    points bigint
-);
-
-create table user_game_data (
-    id bigserial,
-    user_id bigint,
-    role_id bigint,
-    achievements_id bigint[]
-);
-
-create table "user" (
-    id bigserial,
+drop table if exists users;
+create table users (
+    id integer primary key,
     login varchar(100),
     password varchar(100),
-    role varchar(100),
-    club_id bigint
+    role integer
 );
 
+drop table if exists role;
 create table role (
-    id bigserial,
+    id integer primary key,
     title varchar(100)
 );
+
+--drop table if exists actions;
+create table actions (
+    id integer primary key,
+    title varchar(100)
+);
+
+drop table if exists achievement;
+create table achievement (
+    id integer primary key,
+    actions_id integer,
+    points integer,
+    foreign key (actions_id)
+        references actions (id)
+        on update cascade
+        on delete restrict
+);
+
+drop table if exists user_game_data;
+create table user_game_data (
+    id integer primary key,
+    user_id integer,
+    role_id integer,
+    achievements_id int[],
+    foreign key (user_id)
+        references users (id)
+        on update cascade
+        on delete restrict,
+    foreign key (role_id)
+        references role (id)
+        on update cascade
+        on delete restrict,
+    foreign key (achievements_id)
+        references achievement (id)
+        on update cascade
+        on delete restrict
+);
+
+drop table if exists game;
+create table game (
+    id integer primary key,
+    user_id integer[],
+    club_id integer,
+    start_date date,
+    end_date date,
+    winner varchar(100),
+    foreign key (club_id)
+        references club (id)
+        on update cascade
+        on delete restrict
+);
+
